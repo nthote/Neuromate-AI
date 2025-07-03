@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroMed AI - Advanced Medical Diagnostics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #00acc1;
+            --accent-color: #ff7043;
+            --light-color: #e8f4f8;
+            --dark-color: #0d47a1;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            perspective: 1000px;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transform-style: preserve-3d;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand img {
+            height: 30px;
+            margin-right: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 6rem 0 8rem;
+            margin-bottom: 3rem;
+            border-radius: 0 0 30px 30px;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            opacity: 0.6;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            transform: translateZ(50px);
+        }
+        
+        .search-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+            margin-top: -4rem;
+            position: relative;
+            z-index: 10;
+            transform: translateY(0) rotateX(0deg);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .search-container:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .ai-search-bar {
+            border: 2px solid var(--secondary-color);
+            border-radius: 50px;
+            padding: 0.8rem 1.5rem;
+            transition: all 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .ai-search-bar:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 172, 193, 0.25);
+            border-color: var(--secondary-color);
+        }
+        
+        .search-btn {
+            background: linear-gradient(135deg, var(--secondary-color), #00838f);
+            color: white;
+            border-radius: 50px;
+            padding: 0.8rem 2.5rem;
+            border: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 172, 193, 0.3);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transform: translateZ(0);
+        }
+        
+        .search-btn:hover {
+            background: linear-gradient(135deg, #00838f, var(--secondary-color));
+            transform: translateY(-3px) translateZ(10px);
+            box-shadow: 0 6px 20px rgba(0, 172, 193, 0.4);
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            height: 100%;
+            border-top: 4px solid var(--secondary-color);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 172, 193, 0.05), rgba(255, 255, 255, 0.1));
+            z-index: -1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) rotateY(5deg) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .results-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            display: none;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--secondary-color);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+            background-color: rgba(0, 172, 193, 0.05);
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgwLDE3MiwxOTMsMC4wNSkiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=');
+            opacity: 0.5;
+        }
+        
+        .upload-area:hover {
+            background-color: rgba(0, 172, 193, 0.1);
+            transform: translateY(-3px) translateZ(10px);
+            box-shadow: 0 10px 20px rgba(0, 172, 193, 0.1);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            background: linear-gradient(135deg, var(--secondary-color), #00838f);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 172, 193, 0.3);
+            transform: translateZ(0);
+        }
+        
+        .file-label:hover {
+            background: linear-gradient(135deg, #00838f, var(--secondary-color));
+            transform: translateY(-2px) translateZ(10px);
+            box-shadow: 0 6px 15px rgba(0, 172, 193, 0.4);
+        }
+        
+        .selected-files {
+            margin-top: 1.5rem;
+        }
+        
+        .file-item {
+            background-color: #f8f9fa;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .file-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .file-item button {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .file-item button:hover {
+            transform: scale(1.2);
+        }
+        
+        .ai-response {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin-top: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ai-response::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgwLDE3MiwxOTMsMC4wNSkiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=');
+            opacity: 0.3;
+        }
+        
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.25rem;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 3rem 0;
+            margin-top: 5rem;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+            opacity: 0.4;
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .confidence-meter {
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            margin: 8px 0;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .confidence-level {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            transition: width 0.5s ease;
+        }
+        
+        .severity-indicator {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .severity-low {
+            background-color: #2ecc71;
+        }
+        
+        .severity-medium {
+            background-color: #f39c12;
+        }
+        
+        .severity-high {
+            background-color: #e74c3c;
+        }
+        
+        .condition-card {
+            border-left: 4px solid;
+            margin-bottom: 20px;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+        }
+        
+        .condition-card:hover {
+            transform: translateX(10px) translateZ(10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .condition-low {
+            border-color: #2ecc71;
+            background: linear-gradient(to right, rgba(46, 204, 113, 0.05), white);
+        }
+        
+        .condition-medium {
+            border-color: #f39c12;
+            background: linear-gradient(to right, rgba(243, 156, 18, 0.05), white);
+        }
+        
+        .condition-high {
+            border-color: #e74c3c;
+            background: linear-gradient(to right, rgba(231, 76, 60, 0.05), white);
+        }
+        
+        .reference-badge {
+            background-color: #6c757d;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 8px;
+            display: inline-block;
+            transform: translateZ(0);
+        }
+        
+        .medical-image {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+        }
+        
+        .medical-image:hover {
+            transform: translateY(-5px) rotateY(5deg) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .image-caption {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 172, 193, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 172, 193, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 172, 193, 0);
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px) translateZ(0); }
+            50% { transform: translateY(-10px) translateZ(10px); }
+            100% { transform: translateY(0px) translateZ(0); }
+        }
+        
+        .rotate-3d {
+            animation: rotate3d 15s infinite linear;
+            transform-style: preserve-3d;
+        }
+        
+        @keyframes rotate3d {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg) translateZ(10px);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 4rem 0 6rem;
+            }
+            
+            .search-container {
+                padding: 1.5rem;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTM2OCAxMjhIMTQ0Yy0yNi41IDAtNDggMjEuNS00OCA0OHYxNjBjMCAyNi41IDIxLjUgNDggNDggNDhoMjI0YzI2LjUgMCA0OC0yMS41IDQ4LTQ4VjE3NmMwLTI2LjUtMjEuNS00OC00OC00OHptLTE2IDE2MGMwIDguOC03LjIgMTYtMTYgMTZzLTE2LTcuMi0xNi0xNnYtMzJjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnYzMnptLTk2IDBjMCA4LjgtNy4yIDE2LTE2IDE2cy0xNi03LjItMTYtMTZ2LTMyYzAtOC44IDcuMi0xNiAxNi0xNnMxNiA3LjIgMTYgMTZ2MzJ6bTk2IDY0YzAgOC44LTcuMiAxNi0xNiAxNnMtMTYtNy4yLTE2LTE2di0zMmMwLTguOCA3LjItMTYgMTYtMTZzMTYgNy4yIDE2IDE2djMyem0tOTYgMGMwIDguOC03LjIgMTYtMTYgMTZzLTE2LTcuMi0xNi0xNnYtMzJjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnYzMnoiLz48L3N2Zz4=" alt="AI Icon">
+                NeuroMed AI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Diagnostics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center hero-content">
+            <h1 class="display-4 fw-bold mb-4">Advanced NeuroMed AI Diagnostics</h1>
+            <p class="lead mb-5">Next-generation adaptive medical analysis powered by deep learning</p>
+            
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-8 col-lg-6">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTQ0OCAzMkg2NEM0Ni4zMyAzMiAzMiA0Ni4zMyAzMiA2NHYzODRjMCAxNy42NyAxNC4zMyAzMiAzMiAzMmgzODRjMTcuNjcgMCAzMi0xNC4zMyAzMi0zMlY2NGMwLTE3LjY3LTE0LjMzLTMyLTMyLTMyem0tMzIwIDk2YzAtMTcuNjcgMTQuMzMtMzIgMzItMzJzMzIgMTQuMzMgMzIgMzItMTQuMzMgMzItMzIgMzItMzItMTQuMzMtMzItMzJ6bTk2IDE5MmgtNjR2LTk2aDY0djk2em0zMi0xMjhjMCAxNy42Ny0xNC4zMyAzMi0zMiAzMnMtMzItMTQuMzMtMzItMzIgMTQuMzMtMzIgMzItMzIgMzIgMTQuMzMgMzIgMzJ6bTk2IDMyaC02NHYtNjRoNjR2NjR6bTAtOTZoLTY0di02NGg2NHY2NHoiIG9wYWNpdHk9IjAuNyIvPjwvc3ZnPg==" class="img-fluid floating" alt="Medical AI" style="max-height: 200px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Container -->
+    <div class="container">
+        <div class="search-container pulse-animation">
+            <h2 class="text-center mb-4">Comprehensive Medical Analysis</h2>
+            <p class="text-center text-muted mb-4">Describe symptoms, upload medical images, or provide patient data for AI-powered diagnosis</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="input-group mb-4">
+                        <input type="text" class="form-control ai-search-bar" id="aiSearchInput" placeholder="Example: '45-year-old male with chest pain and shortness of breath for 2 hours...'">
+                        <button class="btn search-btn" id="searchButton">
+                            <i class="bi bi-robot me-2"></i>Analyze
+                        </button>
+                    </div>
+                    
+                    <!-- File Upload Area -->
+                    <div class="upload-area" id="uploadArea">
+                        <i class="bi bi-cloud-arrow-up feature-icon floating"></i>
+                        <h5>Upload Medical Images</h5>
+                        <p class="text-muted">Drag & drop X-rays, MRIs, CT scans, or other medical images here</p>
+                        <input type="file" id="fileInput" class="file-input" accept="image/*,.dicom,.nii" multiple>
+                        <label for="fileInput" class="file-label">
+                            <i class="bi bi-upload me-2"></i>Select Files
+                        </label>
+                    </div>
+                    
+                    <div class="selected-files" id="selectedFiles"></div>
+                    
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Additional patient information (optional)" id="patientInfo" style="height: 120px"></textarea>
+                        <label for="patientInfo">Patient details (age, gender, medical history, medications, lab results)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div class="results-container" id="resultsContainer">
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">NeuroMed AI is analyzing your data. This may take a few moments...</p>
+                <div class="progress mt-3" style="height: 8px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                </div>
+            </div>
+            <div id="analysisResults"></div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="container my-5 py-5">
+        <h2 class="text-center mb-5">NeuroMed AI Diagnostic Capabilities</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card card-3d">
+                    <div class="feature-icon">
+                        <i class="bi bi-activity rotate-3d"></i>
+                    </div>
+                    <h4>Multi-Modal Analysis</h4>
+                    <p>Simultaneously processes symptoms, medical images, lab results, and patient history for comprehensive assessment.</p>
+                    
+                    <div class="mt-3">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" class="img-fluid medical-image" alt="Multi-Modal Analysis">
+                        <p class="image-caption">Integrated diagnostic approach</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d">
+                    <div class="feature-icon">
+                        <i class="bi bi-heart-pulse rotate-3d"></i>
+                    </div>
+                    <h4>Clinical Decision Support</h4>
+                    <p>Provides evidence-based treatment recommendations and flags potential medication interactions.</p>
+                    
+                    <div class="mt-3">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" class="img-fluid medical-image" alt="Clinical Decision">
+                        <p class="image-caption">Evidence-based guidelines</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check rotate-3d"></i>
+                    </div>
+                    <h4>Continuous Learning</h4>
+                    <p>Adaptive algorithms improve with each case, incorporating the latest medical research and guidelines.</p>
+                    
+                    <div class="mt-3">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" class="img-fluid medical-image" alt="Continuous Learning">
+                        <p class="image-caption">Adaptive neural networks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medical Guidelines Section -->
+    <section class="container my-5 py-5 bg-light rounded-3">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>Evidence-Based Medicine</h2>
+                <p class="lead">NeuroMed AI integrates with the latest clinical guidelines and research findings to provide up-to-date recommendations.</p>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item bg-transparent"><i class="bi bi-check-circle-fill text-success me-2"></i> ACC/AHA Cardiovascular Guidelines</li>
+                    <li class="list-group-item bg-transparent"><i class="bi bi-check-circle-fill text-success me-2"></i> IDSA Antimicrobial Recommendations</li>
+                    <li class="list-group-item bg-transparent"><i class="bi bi-check-circle-fill text-success me-2"></i> NCCN Cancer Treatment Protocols</li>
+                    <li class="list-group-item bg-transparent"><i class="bi bi-check-circle-fill text-success me-2"></i> ADA Diabetes Standards of Care</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" class="img-fluid rounded-3 medical-image floating" alt="Medical Guidelines">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center footer-content">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>NeuroMed AI</h5>
+                    <p>Advanced diagnostic solutions for modern healthcare</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">Diagnostics</a></li>
+                        <li><a href="#" class="text-white">Research</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-envelope me-2"></i> contact@neuromedai.com</li>
+                        <li><i class="bi bi-phone me-2"></i> +91 8010166901</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-light opacity-50">
+            <p class="mb-0">&copy; 2025 NeuroMed AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // File upload handling
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const selectedFiles = document.getElementById('selectedFiles');
+            const searchButton = document.getElementById('searchButton');
+            const aiSearchInput = document.getElementById('aiSearchInput');
+            const patientInfo = document.getElementById('patientInfo');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const analysisResults = document.getElementById('analysisResults');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            let files = [];
+            
+            // ==================== MEDICAL KNOWLEDGE BASE ====================
+            
+            // Symptom-Condition Database
+            const medicalConditions = {
+                // Cardiovascular Symptoms
+                'chest pain': [
+                    { 
+                        condition: 'Acute Coronary Syndrome', 
+                        severity: 'high', 
+                        confidence: 0.85, 
+                        symptoms: ['chest pain', 'shortness of breath', 'nausea', 'sweating', 'arm pain'],
+                        diagnosis: 'ECG, cardiac enzymes, coronary angiography',
+                        treatment: 'Aspirin, nitroglycerin, PCI or thrombolytics',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Pulmonary Embolism', 
+                        severity: 'high', 
+                        confidence: 0.75, 
+                        symptoms: ['chest pain', 'shortness of breath', 'tachycardia', 'hemoptysis', 'leg swelling'],
+                        diagnosis: 'D-dimer, CT pulmonary angiography, V/Q scan',
+                        treatment: 'Anticoagulation (heparin, warfarin, DOACs)',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'GERD', 
+                        severity: 'low', 
+                        confidence: 0.65, 
+                        symptoms: ['chest pain', 'heartburn', 'regurgitation', 'acid taste', 'worse when lying down'],
+                        diagnosis: 'Clinical diagnosis, endoscopy if refractory',
+                        treatment: 'PPIs, lifestyle modifications',
+                        reference: ':cite[1]'
+                    }
+                ],
+                'palpitations': [
+                    { 
+                        condition: 'Atrial Fibrillation', 
+                        severity: 'high', 
+                        confidence: 0.82, 
+                        symptoms: ['palpitations', 'irregular pulse', 'fatigue', 'shortness of breath', 'dizziness'],
+                        diagnosis: 'ECG showing irregularly irregular rhythm, echocardiogram',
+                        treatment: 'Rate control (beta-blockers, calcium channel blockers), anticoagulation for stroke prevention',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Ventricular Tachycardia', 
+                        severity: 'high', 
+                        confidence: 0.78, 
+                        symptoms: ['palpitations', 'chest pain', 'lightheadedness', 'syncope', 'shortness of breath'],
+                        diagnosis: 'ECG showing wide QRS complex tachycardia',
+                        treatment: 'Immediate cardioversion if unstable, antiarrhythmics, ICD for recurrent cases',
+                        reference: ':cite[5]'
+                    },
+                    { 
+                        condition: 'Anxiety Disorder', 
+                        severity: 'low', 
+                        confidence: 0.75, 
+                        symptoms: ['palpitations', 'nervousness', 'sweating', 'trembling', 'sense of impending doom'],
+                        diagnosis: 'Clinical diagnosis, rule out organic causes',
+                        treatment: 'SSRIs, CBT, relaxation techniques',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // Neurological Symptoms
+                'headache': [
+                    { 
+                        condition: 'Migraine', 
+                        severity: 'medium', 
+                        confidence: 0.78, 
+                        symptoms: ['headache', 'photophobia', 'nausea', 'unilateral pain', 'aura'],
+                        diagnosis: 'Clinical diagnosis based on history',
+                        treatment: 'Triptans, NSAIDs, antiemetics, preventive meds',
+                        reference: ':cite[1]:cite[2]'
+                    },
+                    { 
+                        condition: 'Tension Headache', 
+                        severity: 'low', 
+                        confidence: 0.82, 
+                        symptoms: ['headache', 'muscle tenderness', 'band-like pressure', 'stress-related'],
+                        diagnosis: 'Clinical diagnosis, rule out red flags',
+                        treatment: 'NSAIDs, stress management, physical therapy',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Subarachnoid Hemorrhage', 
+                        severity: 'high', 
+                        confidence: 0.68, 
+                        symptoms: ['headache', 'neck stiffness', 'vomiting', 'thunderclap onset', 'decreased consciousness'],
+                        diagnosis: 'Non-contrast head CT, LP if CT negative',
+                        treatment: 'Neurosurgical consult, blood pressure control',
+                        reference: ':cite[2]:cite[5]'
+                    }
+                ],
+                'dizziness': [
+                    { 
+                        condition: 'Benign Paroxysmal Positional Vertigo (BPPV)', 
+                        severity: 'low', 
+                        confidence: 0.85, 
+                        symptoms: ['dizziness', 'vertigo triggered by head movements', 'nausea', 'nystagmus'],
+                        diagnosis: 'Dix-Hallpike maneuver, head impulse test',
+                        treatment: 'Epley maneuver, vestibular rehabilitation',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Stroke/TIA', 
+                        severity: 'high', 
+                        confidence: 0.79, 
+                        symptoms: ['dizziness', 'focal neurological deficits', 'speech difficulties', 'visual changes', 'ataxia'],
+                        diagnosis: 'Neurological exam, MRI brain, carotid ultrasound',
+                        treatment: 'Thrombolytics if ischemic stroke within window, antiplatelets',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'Orthostatic Hypotension', 
+                        severity: 'medium', 
+                        confidence: 0.72, 
+                        symptoms: ['dizziness', 'lightheadedness on standing', 'blurry vision', 'syncope'],
+                        diagnosis: 'Orthostatic blood pressure measurements',
+                        treatment: 'Increase fluid/salt intake, compression stockings, fludrocortisone if severe',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // Gastrointestinal Symptoms
+                'abdominal pain': [
+                    { 
+                        condition: 'Appendicitis', 
+                        severity: 'high', 
+                        confidence: 0.88, 
+                        symptoms: ['abdominal pain', 'fever', 'anorexia', 'RLQ pain', 'rebound tenderness'],
+                        diagnosis: 'Clinical exam, ultrasound, CT abdomen',
+                        treatment: 'IV antibiotics, appendectomy',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Irritable Bowel Syndrome', 
+                        severity: 'low', 
+                        confidence: 0.72, 
+                        symptoms: ['abdominal pain', 'bloating', 'diarrhea/constipation', 'relief with defecation'],
+                        diagnosis: 'Rome IV criteria, rule out organic causes',
+                        treatment: 'Diet modification, antispasmodics, SSRIs',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Gastritis', 
+                        severity: 'medium', 
+                        confidence: 0.65, 
+                        symptoms: ['abdominal pain', 'nausea', 'indigestion', 'heartburn', 'worse with NSAIDs'],
+                        diagnosis: 'Clinical diagnosis, endoscopy if persistent',
+                        treatment: 'PPIs, H2 blockers, avoid irritants',
+                        reference: ':cite[1]'
+                    }
+                ],
+                'nausea': [
+                    { 
+                        condition: 'Gastroenteritis', 
+                        severity: 'low', 
+                        confidence: 0.83, 
+                        symptoms: ['nausea', 'vomiting', 'diarrhea', 'abdominal cramps', 'low-grade fever'],
+                        diagnosis: 'Clinical diagnosis, stool studies if persistent',
+                        treatment: 'Oral rehydration, antiemetics, bland diet',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Pancreatitis', 
+                        severity: 'high', 
+                        confidence: 0.88, 
+                        symptoms: ['nausea', 'severe epigastric pain radiating to back', 'vomiting', 'tenderness'],
+                        diagnosis: 'Elevated lipase/amylase, CT abdomen with contrast',
+                        treatment: 'NPO, IV fluids, pain control, treat underlying cause',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Medication Side Effect', 
+                        severity: 'low', 
+                        confidence: 0.78, 
+                        symptoms: ['nausea', 'timed with medication administration', 'improves with discontinuation'],
+                        diagnosis: 'Medication review, temporal relationship',
+                        treatment: 'Take with food, adjust dose, consider alternative medication',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // Respiratory Symptoms
+                'shortness of breath': [
+                    { 
+                        condition: 'Asthma', 
+                        severity: 'medium', 
+                        confidence: 0.77, 
+                        symptoms: ['shortness of breath', 'wheezing', 'cough', 'nocturnal symptoms', 'triggers'],
+                        diagnosis: 'Spirometry with reversibility testing',
+                        treatment: 'Inhaled corticosteroids, bronchodilators',
+                        reference: ':cite[1]:cite[2]'
+                    },
+                    { 
+                        condition: 'COPD', 
+                        severity: 'high', 
+                        confidence: 0.83, 
+                        symptoms: ['shortness of breath', 'chronic cough', 'sputum production', 'smoking history'],
+                        diagnosis: 'Spirometry with post-bronchodilator FEV1/FVC <0.7',
+                        treatment: 'Bronchodilators, steroids, oxygen if needed',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'Pneumonia', 
+                        severity: 'high', 
+                        confidence: 0.79, 
+                        symptoms: ['shortness of breath', 'fever', 'cough', 'sputum production', 'pleuritic pain'],
+                        diagnosis: 'Chest X-ray, sputum culture, CBC',
+                        treatment: 'Antibiotics based on suspected pathogen',
+                        reference: ':cite[1]:cite[5]'
+                    }
+                ],
+                'cough': [
+                    { 
+                        condition: 'Acute Bronchitis', 
+                        severity: 'low', 
+                        confidence: 0.82, 
+                        symptoms: ['cough', 'sputum production', 'rhinorrhea', 'sore throat', 'no fever'],
+                        diagnosis: 'Clinical diagnosis, rule out pneumonia',
+                        treatment: 'Symptomatic relief, avoid antibiotics unless bacterial',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Pulmonary Tuberculosis', 
+                        severity: 'high', 
+                        confidence: 0.75, 
+                        symptoms: ['cough', 'hemoptysis', 'night sweats', 'weight loss', 'fever'],
+                        diagnosis: 'Chest X-ray, sputum AFB smear and culture, PCR',
+                        treatment: 'RIPE therapy (rifampin, isoniazid, pyrazinamide, ethambutol)',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'ACE Inhibitor Cough', 
+                        severity: 'low', 
+                        confidence: 0.85, 
+                        symptoms: ['dry cough', 'onset after starting ACE inhibitor', 'no other respiratory symptoms'],
+                        diagnosis: 'Temporal relationship with medication',
+                        treatment: 'Switch to ARB or alternative antihypertensive',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // General Symptoms
+                'fever': [
+                    { 
+                        condition: 'Influenza', 
+                        severity: 'medium', 
+                        confidence: 0.75, 
+                        symptoms: ['fever', 'myalgia', 'headache', 'fatigue', 'cough'],
+                        diagnosis: 'Rapid antigen test, PCR if needed',
+                        treatment: 'Supportive care, antivirals if early',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'COVID-19', 
+                        severity: 'medium', 
+                        confidence: 0.80, 
+                        symptoms: ['fever', 'cough', 'shortness of breath', 'loss of taste/smell', 'fatigue'],
+                        diagnosis: 'PCR testing, antigen tests',
+                        treatment: 'Supportive care, antivirals for high risk',
+                        reference: ':cite[1]:cite[2]'
+                    },
+                    { 
+                        condition: 'UTI', 
+                        severity: 'low', 
+                        confidence: 0.85, 
+                        symptoms: ['fever', 'dysuria', 'frequency', 'urgency', 'suprapubic pain'],
+                        diagnosis: 'Urinalysis, urine culture',
+                        treatment: 'Antibiotics based on local resistance',
+                        reference: ':cite[1]'
+                    }
+                ],
+                'fatigue': [
+                    { 
+                        condition: 'Anemia', 
+                        severity: 'medium', 
+                        confidence: 0.78, 
+                        symptoms: ['fatigue', 'pallor', 'shortness of breath', 'tachycardia', 'brittle nails'],
+                        diagnosis: 'CBC, iron studies, B12/folate levels',
+                        treatment: 'Iron supplementation, address underlying cause',
+                        reference: ':cite[7]'
+                    },
+                    { 
+                        condition: 'Hypothyroidism', 
+                        severity: 'low', 
+                        confidence: 0.82, 
+                        symptoms: ['fatigue', 'weight gain', 'cold intolerance', 'constipation', 'dry skin'],
+                        diagnosis: 'TSH, free T4 levels',
+                        treatment: 'Levothyroxine replacement',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Depression', 
+                        severity: 'medium', 
+                        confidence: 0.70, 
+                        symptoms: ['fatigue', 'low mood', 'anhedonia', 'sleep disturbance', 'appetite changes'],
+                        diagnosis: 'Clinical diagnosis using DSM-5 criteria',
+                        treatment: 'SSRIs, psychotherapy, lifestyle changes',
+                        reference: ':cite[1]:cite[2]'
+                    }
+                ],
+                
+                // Musculoskeletal Symptoms
+                'back pain': [
+                    { 
+                        condition: 'Mechanical Low Back Pain', 
+                        severity: 'low', 
+                        confidence: 0.88, 
+                        symptoms: ['back pain', 'worse with movement', 'no neurological deficits', 'improves with rest'],
+                        diagnosis: 'Clinical diagnosis, imaging only if red flags present',
+                        treatment: 'NSAIDs, physical therapy, activity modification',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Spinal Cord Compression', 
+                        severity: 'high', 
+                        confidence: 0.83, 
+                        symptoms: ['back pain', 'leg weakness', 'bowel/bladder dysfunction', 'sensory loss'],
+                        diagnosis: 'MRI spine, neurological exam',
+                        treatment: 'Emergency neurosurgical evaluation, steroids, possible decompression',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'Ankylosing Spondylitis', 
+                        severity: 'medium', 
+                        confidence: 0.75, 
+                        symptoms: ['chronic back pain', 'morning stiffness', 'improves with exercise', 'limited spinal mobility'],
+                        diagnosis: 'HLA-B27 testing, X-ray showing sacroiliitis',
+                        treatment: 'NSAIDs, TNF inhibitors, physical therapy',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // Genitourinary Symptoms
+                'dysuria': [
+                    { 
+                        condition: 'Urinary Tract Infection', 
+                        severity: 'low', 
+                        confidence: 0.92, 
+                        symptoms: ['dysuria', 'frequency', 'urgency', 'suprapubic pain', 'cloudy urine'],
+                        diagnosis: 'Urinalysis showing WBCs, nitrites, leukocyte esterase',
+                        treatment: 'Trimethoprim-sulfamethoxazole or nitrofurantoin based on local resistance',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Pyelonephritis', 
+                        severity: 'high', 
+                        confidence: 0.87, 
+                        symptoms: ['dysuria', 'flank pain', 'fever', 'nausea/vomiting', 'CVA tenderness'],
+                        diagnosis: 'Urinalysis, urine culture, CBC showing leukocytosis',
+                        treatment: 'IV antibiotics (ceftriaxone, ciprofloxacin), hospitalization if severe',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Sexually Transmitted Infection', 
+                        severity: 'medium', 
+                        confidence: 0.80, 
+                        symptoms: ['dysuria', 'urethral/vaginal discharge', 'pelvic pain', 'sexual exposure'],
+                        diagnosis: 'NAAT testing for chlamydia/gonorrhea, wet mount',
+                        treatment: 'Dual therapy for chlamydia/gonorrhea (ceftriaxone + azithromycin)',
+                        reference: ':cite[1]'
+                    }
+                ]
+            };
+
+            // Image Findings Database
+            const imageFindings = {
+                'chest-xray': [
+                    { 
+                        finding: 'Pulmonary Infiltrate', 
+                        condition: 'Pneumonia', 
+                        confidence: 0.92,
+                        diagnosis: 'Consolidation with air bronchograms',
+                        treatment: 'Antibiotics based on suspected pathogen',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Pleural Effusion', 
+                        condition: 'Congestive Heart Failure', 
+                        confidence: 0.85,
+                        diagnosis: 'Blunted costophrenic angles, fluid in pleural space',
+                        treatment: 'Diuretics, treat underlying heart failure',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Pneumothorax', 
+                        condition: 'Pneumothorax', 
+                        confidence: 0.96,
+                        diagnosis: 'Visceral pleural line with absent lung markings',
+                        treatment: 'Small: observation, Large: chest tube',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Lung Nodule', 
+                        condition: 'Possible Lung Cancer', 
+                        confidence: 0.88,
+                        diagnosis: 'Solitary pulmonary nodule, may need biopsy',
+                        treatment: 'CT follow-up or biopsy based on size/characteristics',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Cardiomegaly', 
+                        condition: 'Congestive Heart Failure', 
+                        confidence: 0.89,
+                        diagnosis: 'Cardiothoracic ratio >0.5, pulmonary vascular congestion',
+                        treatment: 'Diuretics, ACE inhibitors, beta-blockers, treat underlying cause',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Cavitary Lesion', 
+                        condition: 'Tuberculosis or Lung Abscess', 
+                        confidence: 0.85,
+                        diagnosis: 'Thick-walled cavity with air-fluid level',
+                        treatment: 'Antibiotics, possible drainage for abscess, RIPE for TB',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'head-ct': [
+                    { 
+                        finding: 'Intracranial Hemorrhage', 
+                        condition: 'Hemorrhagic Stroke', 
+                        confidence: 0.94,
+                        diagnosis: 'Hyperdense area in brain parenchyma',
+                        treatment: 'Blood pressure control, neurosurgical consult',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Mass Lesion', 
+                        condition: 'Brain Tumor', 
+                        confidence: 0.88,
+                        diagnosis: 'Space-occupying lesion with possible edema',
+                        treatment: 'Neurosurgical evaluation, possible resection',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Ischemic Changes', 
+                        condition: 'Ischemic Stroke', 
+                        confidence: 0.91,
+                        diagnosis: 'Hypodense area in vascular territory',
+                        treatment: 'Thrombolytics if early, aspirin, rehab',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Subdural Hematoma', 
+                        condition: 'Subdural Hematoma', 
+                        confidence: 0.93,
+                        diagnosis: 'Crescent-shaped hyperdensity along brain surface',
+                        treatment: 'Neurosurgical evaluation for evacuation',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Cerebral Atrophy', 
+                        condition: 'Neurodegenerative Disease', 
+                        confidence: 0.83,
+                        diagnosis: 'Enlarged ventricles, widened sulci',
+                        treatment: 'Cognitive evaluation, cholinesterase inhibitors if dementia',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Hydrocephalus', 
+                        condition: 'Obstructive or Communicating Hydrocephalus', 
+                        confidence: 0.88,
+                        diagnosis: 'Enlarged ventricles out of proportion to sulcal enlargement',
+                        treatment: 'Neurosurgical evaluation for possible shunt placement',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'abdominal-ct': [
+                    { 
+                        finding: 'Appendiceal Inflammation', 
+                        condition: 'Appendicitis', 
+                        confidence: 0.93,
+                        diagnosis: 'Dilated appendix >6mm, periappendiceal fat stranding',
+                        treatment: 'IV antibiotics, appendectomy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Bowel Obstruction', 
+                        condition: 'Small Bowel Obstruction', 
+                        confidence: 0.89,
+                        diagnosis: 'Dilated loops of small bowel with transition point',
+                        treatment: 'NPO, NG tube, surgery if signs of strangulation',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Gallstones', 
+                        condition: 'Cholecystitis', 
+                        confidence: 0.87,
+                        diagnosis: 'Gallstones with gallbladder wall thickening',
+                        treatment: 'IV antibiotics, cholecystectomy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Diverticulitis', 
+                        condition: 'Diverticulitis', 
+                        confidence: 0.90,
+                        diagnosis: 'Colonic diverticula with surrounding inflammation',
+                        treatment: 'IV antibiotics, bowel rest, possible surgery',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'mri-brain': [
+                    { 
+                        finding: 'Multiple Sclerosis Plaques', 
+                        condition: 'Multiple Sclerosis', 
+                        confidence: 0.92,
+                        diagnosis: 'Periventricular white matter lesions',
+                        treatment: 'Disease-modifying therapies, symptom management',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Acute Ischemic Stroke', 
+                        condition: 'Ischemic Stroke', 
+                        confidence: 0.95,
+                        diagnosis: 'Restricted diffusion on DWI sequence',
+                        treatment: 'Thrombolytics if early, aspirin, rehab',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'mri-spine': [
+                    { 
+                        finding: 'Herniated Nucleus Pulposus', 
+                        condition: 'Radiculopathy', 
+                        confidence: 0.91,
+                        diagnosis: 'Disc material compressing nerve root',
+                        treatment: 'Physical therapy, epidural steroid injections, possible discectomy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Spinal Stenosis', 
+                        condition: 'Neurogenic Claudication', 
+                        confidence: 0.87,
+                        diagnosis: 'Narrowing of spinal canal with nerve compression',
+                        treatment: 'Physical therapy, surgical decompression if severe',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'ultrasound-abdomen': [
+                    { 
+                        finding: 'Gallbladder Wall Thickening', 
+                        condition: 'Acute Cholecystitis', 
+                        confidence: 0.90,
+                        diagnosis: 'Positive sonographic Murphy sign, pericholecystic fluid',
+                        treatment: 'IV antibiotics, cholecystectomy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Hepatic Steatosis', 
+                        condition: 'Fatty Liver Disease', 
+                        confidence: 0.84,
+                        diagnosis: 'Increased echogenicity of liver compared to kidney',
+                        treatment: 'Weight loss, control of diabetes/dyslipidemia',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'mammogram': [
+                    { 
+                        finding: 'Spiculated Mass', 
+                        condition: 'Breast Cancer', 
+                        confidence: 0.93,
+                        diagnosis: 'Irregular mass with spiculated margins',
+                        treatment: 'Biopsy, surgical excision, possible adjuvant therapy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Clustered Microcalcifications', 
+                        condition: 'Ductal Carcinoma In Situ', 
+                        confidence: 0.86,
+                        diagnosis: 'Pleomorphic calcifications in linear or segmental distribution',
+                        treatment: 'Biopsy, possible lumpectomy with radiation',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ]
+            };
+
+            // Clinical Decision Support Rules
+            const clinicalRules = {
+                // Red Flag Symptoms
+                redFlags: {
+                    neurological: [
+                        'sudden severe headache',
+                        'loss of consciousness',
+                        'seizure',
+                        'sudden vision loss',
+                        'focal weakness',
+                        'dysphagia',
+                        'ataxia'
+                    ],
+                    cardiovascular: [
+                        'chest pain radiating to arm/jaw',
+                        'syncope with exertion',
+                        'palpitations with syncope',
+                        'unexplained hypotension'
+                    ],
+                    abdominal: [
+                        'severe abdominal pain',
+                        'rigid abdomen',
+                        'unexplained weight loss',
+                        'hematemesis',
+                        'melena'
+                    ],
+                    general: [
+                        'high fever (>39°C)',
+                        'neck stiffness',
+                        'petechial rash',
+                        'severe dehydration'
+                    ]
+                },
+                
+                // Age-Specific Considerations
+                ageSpecific: {
+                    pediatric: {
+                        commonConditions: [
+                            'viral infections',
+                            'otitis media',
+                            'asthma',
+                            'gastroenteritis'
+                        ],
+                        redFlags: [
+                            'bulging fontanelle',
+                            'high-pitched cry',
+                            'failure to thrive',
+                            'absence of tears'
+                        ]
+                    },
+                    geriatric: {
+                        commonConditions: [
+                            'pneumonia',
+                            'UTI',
+                            'heart failure',
+                            'osteoarthritis'
+                        ],
+                        atypicalPresentations: [
+                            'delirium as infection presentation',
+                            'silent MI',
+                            'absence of fever in infection'
+                        ]
+                    }
+                },
+                
+                // Medication Interactions
+                dangerousCombinations: [
+                    {
+                        medications: ['warfarin', 'NSAIDs'],
+                        risk: 'Increased bleeding risk',
+                        action: 'Monitor INR closely, consider alternative pain management'
+                    },
+                    {
+                        medications: ['ACE inhibitors', 'potassium-sparing diuretics'],
+                        risk: 'Hyperkalemia',
+                        action: 'Monitor potassium levels, adjust therapy'
+                    }
+                ]
+            };
+
+            // Laboratory Interpretation Database
+            const labInterpretation = {
+                cbc: {
+                    anemia: {
+                        microcytic: {
+                            conditions: ['iron deficiency', 'thalassemia', 'chronic disease'],
+                            nextSteps: ['iron studies', 'Hb electrophoresis', 'ferritin']
+                        },
+                        macrocytic: {
+                            conditions: ['B12/folate deficiency', 'hypothyroidism', 'alcoholism'],
+                            nextSteps: ['B12/folate levels', 'TSH', 'MCV']
+                        }
+                    },
+                    leukocytosis: {
+                        conditions: ['infection', 'inflammation', 'leukemia'],
+                        nextSteps: ['differential', 'blood culture if febrile', 'peripheral smear']
+                    }
+                },
+                
+                chemistry: {
+                    hyponatremia: {
+                        conditions: ['SIADH', 'heart failure', 'cirrhosis', 'diuretic use'],
+                        evaluation: ['serum osmolality', 'urine sodium', 'volume status']
+                    },
+                    elevatedCreatinine: {
+                        conditions: ['acute kidney injury', 'chronic kidney disease'],
+                        evaluation: ['BUN', 'urinalysis', 'renal ultrasound']
+                    }
+                },
+                
+                cardiacMarkers: {
+                    troponinElevation: {
+                        conditions: ['acute MI', 'myocarditis', 'pulmonary embolism'],
+                        evaluation: ['serial troponins', 'ECG', 'echocardiogram']
+                    },
+                    bnpElevation: {
+                        conditions: ['heart failure', 'pulmonary hypertension'],
+                        evaluation: ['echocardiogram', 'volume status assessment']
+                    }
+                }
+            };
+
+            // Evidence-Based Medicine References
+            const evidenceReferences = {
+                citations: {
+                    1: 'UpToDate Clinical Decision Support',
+                    2: 'American College of Physicians Guidelines',
+                    3: 'Radiology Society of North America Guidelines',
+                    4: 'CDC Treatment Guidelines',
+                    5: 'New England Journal of Medicine',
+                    6: 'Journal of the American Medical Association',
+                    7: 'American Journal of Roentgenology'
+                },
+                
+                guidelines: {
+                    hypertension: {
+                        source: 'ACC/AHA 2017 Guidelines',
+                        keyPoints: [
+                            'Diagnosis: BP ≥130/80 mmHg on ≥2 occasions',
+                            'Lifestyle modifications first-line',
+                            'First-line meds: ACE/ARB, CCB, thiazide'
+                        ]
+                    },
+                    diabetes: {
+                        source: 'ADA 2023 Standards of Care',
+                        keyPoints: [
+                            'A1c ≥6.5% diagnostic',
+                            'Lifestyle + metformin first-line',
+                            'Individualize A1c targets'
+                        ]
+                    }
+                }
+            };
+
+            // Temporal Patterns
+            const temporalPatterns = {
+                acuteOnset: ['pulmonary embolism', 'appendicitis', 'stroke'],
+                chronicProgressive: ['COPD', 'congestive heart failure', 'osteoarthritis'],
+                intermittent: ['migraine', 'irritable bowel syndrome', 'angina']
+            };
+
+            // Risk Factors
+            const riskFactors = {
+                smoking: ['lung cancer', 'COPD', 'CAD'],
+                diabetes: ['CAD', 'stroke', 'diabetic neuropathy'],
+                familyHistory: ['breast cancer', 'colon cancer', 'early CAD']
+            };
+
+            // Drug Side Effects
+            const drugSideEffects = {
+                statins: ['myalgia', 'elevated LFTs', 'rare rhabdomyolysis'],
+                opioids: ['constipation', 'sedation', 'respiratory depression'],
+                SSRIs: ['nausea', 'sexual dysfunction', 'activation syndrome']
+            };
+
+            // ==================== END OF MEDICAL KNOWLEDGE BASE ====================
+
+            // Drag and drop functionality
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.backgroundColor = 'rgba(0, 172, 193, 0.15)';
+                uploadArea.style.transform = 'translateY(-5px) translateZ(10px)';
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.backgroundColor = '';
+                uploadArea.style.transform = '';
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.backgroundColor = '';
+                uploadArea.style.transform = '';
+                handleFiles(e.dataTransfer.files);
+            });
+            
+            fileInput.addEventListener('change', () => {
+                handleFiles(fileInput.files);
+            });
+            
+            function handleFiles(newFiles) {
+                files = Array.from(newFiles);
+                updateSelectedFiles();
+            }
+            
+            function updateSelectedFiles() {
+                selectedFiles.innerHTML = '';
+                
+                if (files.length === 0) {
+                    return;
+                }
+                
+                files.forEach((file, index) => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    
+                    const fileInfo = document.createElement('span');
+                    fileInfo.textContent = `${file.name} (${formatFileSize(file.size)})`;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+                    removeBtn.addEventListener('click', () => {
+                        files.splice(index, 1);
+                        updateSelectedFiles();
+                    });
+                    
+                    fileItem.appendChild(fileInfo);
+                    fileItem.appendChild(removeBtn);
+                    selectedFiles.appendChild(fileItem);
+                });
+            }
+            
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            // Search/Analysis functionality
+            searchButton.addEventListener('click', performAnalysis);
+            aiSearchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performAnalysis();
+                }
+            });
+            
+            function performAnalysis() {
+                const query = aiSearchInput.value.trim().toLowerCase();
+                const patientData = patientInfo.value.trim();
+                
+                if (files.length === 0 && query === '' && patientData === '') {
+                    alert('Please enter symptoms, upload files, or provide patient information');
+                    return;
+                }
+                
+                // Show loading and results
+                resultsContainer.style.display = 'block';
+                loadingSpinner.style.display = 'block';
+                analysisResults.innerHTML = '';
+                
+                // Simulate API call with timeout
+                setTimeout(() => {
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Generate dynamic analysis results based on inputs
+                    let resultsHTML = `
+                        <div class="d-flex align-items-center mb-4">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" style="height: 40px;" class="me-3">
+                            <h4 class="mb-0">NeuroMed AI Analysis Report</h4>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle-fill me-2"></i> Analysis performed on ${new Date().toLocaleString()}
+                        </div>
+                    `;
+                    
+                    // Process image files if uploaded
+                    if (files.length > 0) {
+                        resultsHTML += `
+                            <div class="alert alert-success mt-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-check-circle-fill me-3" style="font-size: 1.5rem;"></i>
+                                    <div>
+                                        <h5 class="mb-1">Medical Image Analysis Complete</h5>
+                                        <p class="mb-0">${files.length} medical image(s) processed with deep learning algorithms.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ai-response mt-4">
+                                <h5><i class="bi bi-card-image me-2"></i> AI Findings from Medical Imaging:</h5>
+                        `;
+                        
+                        // Generate different findings based on file names (simulated)
+                        files.forEach(file => {
+                            const fileType = file.name.includes('chest') ? 'chest-xray' : 
+                                             file.name.includes('head') ? 'head-ct' : 
+                                             file.name.includes('abdominal') ? 'abdominal-ct' : 
+                                             file.name.includes('mri') ? 'mri-brain' : 
+                                             file.name.includes('spine') ? 'mri-spine' :
+                                             file.name.includes('ultrasound') ? 'ultrasound-abdomen' :
+                                             file.name.includes('mammogram') ? 'mammogram' : 'chest-xray';
+                            
+                            const findings = imageFindings[fileType] || imageFindings['chest-xray'];
+                            const randomFinding = findings[Math.floor(Math.random() * findings.length)];
+                            
+                            resultsHTML += `
+                                <div class="condition-card condition-${randomFinding.confidence > 0.85 ? 'high' : randomFinding.confidence > 0.7 ? 'medium' : 'low'}">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h6 class="mb-0">${file.name}</h6>
+                                        <span class="badge bg-primary ms-3">${fileType.replace('-', ' ').toUpperCase()}</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Radiological Finding:</strong> ${randomFinding.finding}</p>
+                                            <p><strong>Possible Condition:</strong> ${randomFinding.condition}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Diagnostic Approach:</strong> ${randomFinding.diagnosis}</p>
+                                            <p><strong>Recommended Treatment:</strong> ${randomFinding.treatment}</p>
+                                        </div>
+                                    </div>
+                                    <div class="confidence-meter">
+                                        <div class="confidence-level" style="width: ${randomFinding.confidence * 100}%"></div>
+                                    </div>
+                                    <small>AI Confidence: ${(randomFinding.confidence * 100).toFixed(1)}% <span class="reference-badge">${randomFinding.reference}</span></small>
+                                </div>
+                            `;
+                        });
+                        
+                        resultsHTML += `</div>`;
+                    }
+                    
+                    // Process text query if provided
+                    if (query) {
+                        let matchedConditions = [];
+                        
+                        // Check for red flags first
+                        let redFlagFound = false;
+                        Object.values(clinicalRules.redFlags).forEach(flags => {
+                            flags.forEach(flag => {
+                                if (query.includes(flag.toLowerCase())) {
+                                    redFlagFound = true;
+                                }
+                            });
+                        });
+                        
+                        if (redFlagFound) {
+                            resultsHTML += `
+                                <div class="alert alert-danger mt-4">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-exclamation-triangle-fill me-3" style="font-size: 1.5rem;"></i>
+                                        <div>
+                                            <h5 class="mb-1">Red Flag Symptoms Identified</h5>
+                                            <p class="mb-0">Your description includes symptoms that may indicate a serious medical condition requiring immediate attention.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <p><strong>Recommendation:</strong> Seek emergency medical evaluation immediately. These symptoms may represent a life-threatening condition.</p>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        
+                        // Find matching conditions based on query
+                        Object.keys(medicalConditions).forEach(key => {
+                            if (query.includes(key)) {
+                                matchedConditions = matchedConditions.concat(medicalConditions[key]);
+                            }
+                        });
+                        
+                        // If no direct match, find conditions with matching symptoms
+                        if (matchedConditions.length === 0) {
+                            Object.values(medicalConditions).forEach(conditions => {
+                                conditions.forEach(condition => {
+                                    condition.symptoms.forEach(symptom => {
+                                        if (query.includes(symptom)) {
+                                            matchedConditions.push(condition);
+                                        }
+                                    });
+                                });
+                            });
+                        }
+                        
+                        // Remove duplicates
+                        matchedConditions = matchedConditions.filter((condition, index, self) =>
+                            index === self.findIndex((c) => (
+                                c.condition === condition.condition
+                            ))
+                        );
+                        
+                        // Sort by confidence
+                        matchedConditions.sort((a, b) => b.confidence - a.confidence);
+                        
+                        // Limit to top 3 conditions
+                        matchedConditions = matchedConditions.slice(0, 3);
+                        
+                        resultsHTML += `
+                            <div class="ai-response mt-4">
+                                <h5><i class="bi bi-chat-square-text me-2"></i> Symptom Analysis:</h5>
+                                <div class="alert alert-light">
+                                    <p class="mb-0"><strong>Patient Reported:</strong> "${query}"</p>
+                                </div>
+                        `;
+                        
+                        if (matchedConditions.length > 0) {
+                            resultsHTML += `
+                                <h5 class="mt-3"><i class="bi bi-clipboard2-pulse me-2"></i> Differential Diagnosis:</h5>
+                                <p>Based on the described symptoms, possible conditions include:</p>
+                            `;
+                            
+                            matchedConditions.forEach(condition => {
+                                const severityClass = `severity-${condition.severity}`;
+                                resultsHTML += `
+                                    <div class="condition-card condition-${condition.severity}">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <h6 class="mb-0">
+                                                <span class="severity-indicator ${severityClass}"></span>
+                                                ${condition.condition}
+                                            </h6>
+                                            <span class="badge ${condition.severity === 'high' ? 'bg-danger' : condition.severity === 'medium' ? 'bg-warning' : 'bg-success'} ms-3">${condition.severity.toUpperCase()}</span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><strong>Key Symptoms:</strong> ${condition.symptoms.slice(0, 5).join(', ')}</p>
+                                                <p><strong>Diagnostic Approach:</strong> ${condition.diagnosis}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><strong>Recommended Treatment:</strong> ${condition.treatment}</p>
+                                                <div class="confidence-meter">
+                                                    <div class="confidence-level" style="width: ${condition.confidence * 100}%"></div>
+                                                </div>
+                                                <small>AI Confidence: ${(condition.confidence * 100).toFixed(1)}% <span class="reference-badge">${condition.reference}</span></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                            
+                            // Add recommendations based on severity
+                            const highestSeverity = matchedConditions.reduce((max, condition) => 
+                                condition.severity === 'high' ? 'high' : 
+                                condition.severity === 'medium' && max !== 'high' ? 'medium' : max, 'low');
+                            
+                            resultsHTML += `<h5 class="mt-4"><i class="bi bi-lightbulb me-2"></i> Clinical Recommendations:</h5>`;
+                            
+                            if (highestSeverity === 'high') {
+                                resultsHTML += `
+                                    <div class="alert alert-danger">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-exclamation-triangle-fill me-3" style="font-size: 1.5rem;"></i>
+                                            <div>
+                                                <h5 class="mb-1">Urgent Care Needed</h5>
+                                                <p class="mb-0">One or more potentially life-threatening conditions have been identified.</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <p><strong>Action Required:</strong> Seek emergency medical attention immediately. Do not delay evaluation.</p>
+                                            <ul>
+                                                <li>Call emergency services if symptoms are severe or worsening</li>
+                                                <li>Do not attempt to drive yourself to the hospital</li>
+                                                <li>Inform medical staff of all symptoms and this analysis</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                `;
+                            } else if (highestSeverity === 'medium') {
+                                resultsHTML += `
+                                    <div class="alert alert-warning">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-exclamation-triangle-fill me-3" style="font-size: 1.5rem;"></i>
+                                            <div>
+                                                <h5 class="mb-1">Prompt Evaluation Recommended</h5>
+                                                <p class="mb-0">Conditions identified may require medical evaluation within 24-48 hours.</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <p><strong>Action Recommended:</strong> Contact your healthcare provider to schedule an appointment.</p>
+                                            <ul>
+                                                <li>Monitor symptoms closely for any worsening</li>
+                                                <li>Keep a symptom diary to share with your provider</li>
+                                                <li>Seek immediate care if symptoms escalate</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                `;
+                            } else {
+                                resultsHTML += `
+                                    <div class="alert alert-info">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-info-circle-fill me-3" style="font-size: 1.5rem;"></i>
+                                            <div>
+                                                <h5 class="mb-1">Self-Care May Be Appropriate</h5>
+                                                <p class="mb-0">Conditions identified are likely non-urgent based on current information.</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <p><strong>Recommendations:</strong></p>
+                                            <ul>
+                                                <li>Monitor symptoms and seek care if they persist beyond 7-10 days</li>
+                                                <li>Consider over-the-counter remedies as appropriate</li>
+                                                <li>Maintain hydration and rest</li>
+                                                <li>Follow up with primary care if symptoms recur frequently</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        } else {
+                            resultsHTML += `
+                                <div class="alert alert-info">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-info-circle-fill me-3" style="font-size: 1.5rem;"></i>
+                                        <div>
+                                            <h5 class="mb-1">No Specific Conditions Identified</h5>
+                                            <p class="mb-0">No clear diagnostic patterns detected based on the symptoms provided.</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <p><strong>Recommendations:</strong></p>
+                                        <ul>
+                                            <li>Consider providing more detailed symptom information</li>
+                                            <li>Monitor for any new or changing symptoms</li>
+                                            <li>Consult with a healthcare provider if symptoms persist or concern you</li>
+                                            <li>Review our symptom checker for more specific guidance</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        
+                        resultsHTML += `</div>`;
+                    }
+                    
+                    // Process patient data if provided
+                    if (patientData) {
+                        resultsHTML += `
+                            <div class="ai-response mt-4">
+                                <h5><i class="bi bi-person-lines-fill me-2"></i> Patient Data Analysis</h5>
+                                <div class="alert alert-light">
+                                    <p class="mb-0"><strong>Patient Information Provided:</strong> ${patientData}</p>
+                                </div>
+                                <p>The provided patient information suggests the following considerations:</p>
+                                <div class="row">
+                        `;
+                        
+                        // Analyze patient data for risk factors
+                        const ageMatch = patientData.match(/(\d+)\s*years?/i);
+                        const genderMatch = patientData.match(/(male|female)/i);
+                        const medsMatch = patientData.match(/(medications|taking):?\s*([^.]+)/i);
+                        
+                        if (ageMatch) {
+                            const age = parseInt(ageMatch[1]);
+                            if (age > 65) {
+                                resultsHTML += `
+                                    <div class="col-md-6">
+                                        <div class="alert alert-secondary">
+                                            <h6><i class="bi bi-person-plus me-2"></i> Geriatric Considerations</h6>
+                                            <p>Patient age (${age} years) increases risk for:</p>
+                                            <ul>
+                                                <li>Cardiovascular disease</li>
+                                                <li>Polypharmacy concerns</li>
+                                                <li>Age-related cancer risks</li>
+                                            </ul>
+                                            <p><strong>Recommendations:</strong> Age-appropriate cancer screenings (colon, breast, prostate), fall risk assessment, medication review.</p>
+                                        </div>
+                                    </div>
+                                `;
+                            } else if (age < 18) {
+                                resultsHTML += `
+                                    <div class="col-md-6">
+                                        <div class="alert alert-secondary">
+                                            <h6><i class="bi bi-emoji-smile me-2"></i> Pediatric Considerations</h6>
+                                            <p>Different diagnostic considerations apply for pediatric patients:</p>
+                                            <ul>
+                                                <li>Growth and development milestones</li>
+                                                <li>Age-specific normal ranges</li>
+                                                <li>Pediatric dosing requirements</li>
+                                            </ul>
+                                            <p><strong>Recommendations:</strong> Consult pediatric growth charts, consider developmental stage in assessment.</p>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        }
+                        
+                        if (genderMatch) {
+                            const gender = genderMatch[1].toLowerCase();
+                            resultsHTML += `
+                                <div class="col-md-6">
+                                    <div class="alert alert-secondary">
+                                        <h6><i class="bi bi-gender-${gender === 'male' ? 'male' : 'female'} me-2"></i> ${gender === 'male' ? 'Male' : 'Female'} Health Considerations</h6>
+                                        <p>Biological ${gender} - certain conditions have different prevalence:</p>
+                                        <ul>
+                            `;
+                            if (gender === 'female') {
+                                resultsHTML += `
+                                    <li>Higher risk of autoimmune diseases</li>
+                                    <li>Consider reproductive health factors</li>
+                                    <li>Different cardiovascular risk profile</li>
+                                `;
+                            } else {
+                                resultsHTML += `
+                                    <li>Higher risk of cardiovascular disease at younger age</li>
+                                    <li>Consider prostate health if age >50</li>
+                                    <li>Different patterns of depression presentation</li>
+                                `;
+                            }
+                            resultsHTML += `
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        
+                        resultsHTML += `</div>`; // Close row
+                        
+                        if (medsMatch) {
+                            const meds = medsMatch[2];
+                            resultsHTML += `
+                                <div class="alert alert-secondary">
+                                    <h6><i class="bi bi-capsule me-2"></i> Medication Analysis</h6>
+                                    <p><strong>Current medications reported:</strong> ${meds}</p>
+                            `;
+                            
+                            // Check for dangerous combinations
+                            let dangerousComboFound = false;
+                            clinicalRules.dangerousCombinations.forEach(combo => {
+                                if (combo.medications.every(med => patientData.toLowerCase().includes(med.toLowerCase()))) {
+                                    dangerousComboFound = true;
+                                    resultsHTML += `
+                                        <div class="alert alert-danger mt-2">
+                                            <h6><i class="bi bi-exclamation-octagon-fill me-2"></i> Potential Dangerous Interaction</h6>
+                                            <p><strong>Medications:</strong> ${combo.medications.join(' + ')}</p>
+                                            <p><strong>Risk:</strong> ${combo.risk}</p>
+                                            <p><strong>Action:</strong> ${combo.action}</p>
+                                        </div>
+                                    `;
+                                }
+                            });
+                            
+                            if (!dangerousComboFound) {
+                                resultsHTML += `<p class="text-success"><i class="bi bi-check-circle-fill me-2"></i> No dangerous medication interactions detected.</p>`;
+                            }
+                            
+                            resultsHTML += `</div>`;
+                        }
+                        
+                        // Check for common risk factors
+                        let riskFactorsFound = false;
+                        let riskFactorsHTML = '<h6><i class="bi bi-clipboard2-pulse me-2"></i> Identified Risk Factors</h6><ul>';
+                        
+                        Object.entries(riskFactors).forEach(([factor, conditions]) => {
+                            if (patientData.toLowerCase().includes(factor)) {
+                                riskFactorsFound = true;
+                                riskFactorsHTML += `
+                                    <li>
+                                        <strong>${factor.charAt(0).toUpperCase() + factor.slice(1)}</strong> increases risk for: 
+                                        ${conditions.join(', ')}
+                                    </li>
+                                `;
+                            }
+                        });
+                        
+                        riskFactorsHTML += '</ul>';
+                        
+                        if (riskFactorsFound) {
+                            resultsHTML += `<div class="alert alert-secondary">${riskFactorsHTML}</div>`;
+                        } else {
+                            resultsHTML += `
+                                <div class="alert alert-secondary">
+                                    <h6><i class="bi bi-clipboard2-pulse me-2"></i> Risk Factor Assessment</h6>
+                                    <p>No major risk factors identified from provided information.</p>
+                                    <p><strong>Recommendation:</strong> Consider screening for common risk factors based on age and gender.</p>
+                                </div>
+                            `;
+                        }
+                        
+                        // Add general health recommendations
+                        resultsHTML += `
+                                <h5 class="mt-3"><i class="bi bi-heart me-2"></i> Preventive Health Recommendations</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="alert alert-success">
+                                            <h6><i class="bi bi-calendar-check me-2"></i> Recommended Screenings</h6>
+                                            <ul>
+                                                <li>Blood pressure check annually</li>
+                                                <li>Cholesterol screening every 4-6 years</li>
+                                                <li>Diabetes screening if risk factors present</li>
+                                                <li>Age-appropriate cancer screenings</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="alert alert-success">
+                                            <h6><i class="bi bi-lightning-charge me-2"></i> Lifestyle Recommendations</h6>
+                                            <ul>
+                                                <li>150 minutes moderate exercise weekly</li>
+                                                <li>Balanced diet rich in fruits/vegetables</li>
+                                                <li>7-9 hours sleep nightly</li>
+                                                <li>Stress management techniques</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    // Add disclaimer
+                    resultsHTML += `
+                        <div class="alert alert-secondary mt-4">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-shield-exclamation me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h5 class="mb-1">Important Disclaimer</h5>
+                                    <p class="mb-0">This AI analysis is for informational purposes only and should not replace professional medical advice.</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <p><strong>Key Limitations:</strong></p>
+                                <ul>
+                                    <li>Not a substitute for clinical evaluation by a qualified healthcare provider</li>
+                                    <li>Accuracy depends on quality and completeness of input data</li>
+                                    <li>Does not account for all possible clinical variables</li>
+                                </ul>
+                                <p class="mb-0"><strong>Always consult with a qualified healthcare provider for diagnosis and treatment.</strong></p>
+                            </div>
+                            <div class="mt-3">
+                                <p class="small text-muted mb-0">
+                                    <strong>References:</strong> 
+                                    ${Object.entries(evidenceReferences.citations).map(([num, source]) => `${num}=${source}`).join(', ')}
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    analysisResults.innerHTML = resultsHTML;
+                    
+                    // Scroll to results
+                    resultsContainer.scrollIntoView({ behavior: 'smooth' });
+                }, 2500);
+            }
+        });
+    </script>
+</body>
+</html>
