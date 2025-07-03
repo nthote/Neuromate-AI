@@ -1,0 +1,754 @@
+
+            // ==================== MEDICAL KNOWLEDGE BASE ====================
+            
+            // Symptom-Condition Database
+            const medicalConditions = {
+                // Cardiovascular Symptoms
+                'chest pain': [
+                    { 
+                        condition: 'Acute Coronary Syndrome', 
+                        severity: 'high', 
+                        confidence: 0.85, 
+                        symptoms: ['chest pain', 'shortness of breath', 'nausea', 'sweating', 'arm pain'],
+                        diagnosis: 'ECG, cardiac enzymes, coronary angiography',
+                        treatment: 'Aspirin, nitroglycerin, PCI or thrombolytics',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Pulmonary Embolism', 
+                        severity: 'high', 
+                        confidence: 0.75, 
+                        symptoms: ['chest pain', 'shortness of breath', 'tachycardia', 'hemoptysis', 'leg swelling'],
+                        diagnosis: 'D-dimer, CT pulmonary angiography, V/Q scan',
+                        treatment: 'Anticoagulation (heparin, warfarin, DOACs)',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'GERD', 
+                        severity: 'low', 
+                        confidence: 0.65, 
+                        symptoms: ['chest pain', 'heartburn', 'regurgitation', 'acid taste', 'worse when lying down'],
+                        diagnosis: 'Clinical diagnosis, endoscopy if refractory',
+                        treatment: 'PPIs, lifestyle modifications',
+                        reference: ':cite[1]'
+                    }
+                ],
+                'palpitations': [
+                    { 
+                        condition: 'Atrial Fibrillation', 
+                        severity: 'high', 
+                        confidence: 0.82, 
+                        symptoms: ['palpitations', 'irregular pulse', 'fatigue', 'shortness of breath', 'dizziness'],
+                        diagnosis: 'ECG showing irregularly irregular rhythm, echocardiogram',
+                        treatment: 'Rate control (beta-blockers, calcium channel blockers), anticoagulation for stroke prevention',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Ventricular Tachycardia', 
+                        severity: 'high', 
+                        confidence: 0.78, 
+                        symptoms: ['palpitations', 'chest pain', 'lightheadedness', 'syncope', 'shortness of breath'],
+                        diagnosis: 'ECG showing wide QRS complex tachycardia',
+                        treatment: 'Immediate cardioversion if unstable, antiarrhythmics, ICD for recurrent cases',
+                        reference: ':cite[5]'
+                    },
+                    { 
+                        condition: 'Anxiety Disorder', 
+                        severity: 'low', 
+                        confidence: 0.75, 
+                        symptoms: ['palpitations', 'nervousness', 'sweating', 'trembling', 'sense of impending doom'],
+                        diagnosis: 'Clinical diagnosis, rule out organic causes',
+                        treatment: 'SSRIs, CBT, relaxation techniques',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // Neurological Symptoms
+                'headache': [
+                    { 
+                        condition: 'Migraine', 
+                        severity: 'medium', 
+                        confidence: 0.78, 
+                        symptoms: ['headache', 'photophobia', 'nausea', 'unilateral pain', 'aura'],
+                        diagnosis: 'Clinical diagnosis based on history',
+                        treatment: 'Triptans, NSAIDs, antiemetics, preventive meds',
+                        reference: ':cite[1]:cite[2]'
+                    },
+                    { 
+                        condition: 'Tension Headache', 
+                        severity: 'low', 
+                        confidence: 0.82, 
+                        symptoms: ['headache', 'muscle tenderness', 'band-like pressure', 'stress-related'],
+                        diagnosis: 'Clinical diagnosis, rule out red flags',
+                        treatment: 'NSAIDs, stress management, physical therapy',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Subarachnoid Hemorrhage', 
+                        severity: 'high', 
+                        confidence: 0.68, 
+                        symptoms: ['headache', 'neck stiffness', 'vomiting', 'thunderclap onset', 'decreased consciousness'],
+                        diagnosis: 'Non-contrast head CT, LP if CT negative',
+                        treatment: 'Neurosurgical consult, blood pressure control',
+                        reference: ':cite[2]:cite[5]'
+                    }
+                ],
+                'dizziness': [
+                    { 
+                        condition: 'Benign Paroxysmal Positional Vertigo (BPPV)', 
+                        severity: 'low', 
+                        confidence: 0.85, 
+                        symptoms: ['dizziness', 'vertigo triggered by head movements', 'nausea', 'nystagmus'],
+                        diagnosis: 'Dix-Hallpike maneuver, head impulse test',
+                        treatment: 'Epley maneuver, vestibular rehabilitation',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Stroke/TIA', 
+                        severity: 'high', 
+                        confidence: 0.79, 
+                        symptoms: ['dizziness', 'focal neurological deficits', 'speech difficulties', 'visual changes', 'ataxia'],
+                        diagnosis: 'Neurological exam, MRI brain, carotid ultrasound',
+                        treatment: 'Thrombolytics if ischemic stroke within window, antiplatelets',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'Orthostatic Hypotension', 
+                        severity: 'medium', 
+                        confidence: 0.72, 
+                        symptoms: ['dizziness', 'lightheadedness on standing', 'blurry vision', 'syncope'],
+                        diagnosis: 'Orthostatic blood pressure measurements',
+                        treatment: 'Increase fluid/salt intake, compression stockings, fludrocortisone if severe',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // Gastrointestinal Symptoms
+                'abdominal pain': [
+                    { 
+                        condition: 'Appendicitis', 
+                        severity: 'high', 
+                        confidence: 0.88, 
+                        symptoms: ['abdominal pain', 'fever', 'anorexia', 'RLQ pain', 'rebound tenderness'],
+                        diagnosis: 'Clinical exam, ultrasound, CT abdomen',
+                        treatment: 'IV antibiotics, appendectomy',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Irritable Bowel Syndrome', 
+                        severity: 'low', 
+                        confidence: 0.72, 
+                        symptoms: ['abdominal pain', 'bloating', 'diarrhea/constipation', 'relief with defecation'],
+                        diagnosis: 'Rome IV criteria, rule out organic causes',
+                        treatment: 'Diet modification, antispasmodics, SSRIs',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Gastritis', 
+                        severity: 'medium', 
+                        confidence: 0.65, 
+                        symptoms: ['abdominal pain', 'nausea', 'indigestion', 'heartburn', 'worse with NSAIDs'],
+                        diagnosis: 'Clinical diagnosis, endoscopy if persistent',
+                        treatment: 'PPIs, H2 blockers, avoid irritants',
+                        reference: ':cite[1]'
+                    }
+                ],
+                'nausea': [
+                    { 
+                        condition: 'Gastroenteritis', 
+                        severity: 'low', 
+                        confidence: 0.83, 
+                        symptoms: ['nausea', 'vomiting', 'diarrhea', 'abdominal cramps', 'low-grade fever'],
+                        diagnosis: 'Clinical diagnosis, stool studies if persistent',
+                        treatment: 'Oral rehydration, antiemetics, bland diet',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Pancreatitis', 
+                        severity: 'high', 
+                        confidence: 0.88, 
+                        symptoms: ['nausea', 'severe epigastric pain radiating to back', 'vomiting', 'tenderness'],
+                        diagnosis: 'Elevated lipase/amylase, CT abdomen with contrast',
+                        treatment: 'NPO, IV fluids, pain control, treat underlying cause',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Medication Side Effect', 
+                        severity: 'low', 
+                        confidence: 0.78, 
+                        symptoms: ['nausea', 'timed with medication administration', 'improves with discontinuation'],
+                        diagnosis: 'Medication review, temporal relationship',
+                        treatment: 'Take with food, adjust dose, consider alternative medication',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // Respiratory Symptoms
+                'shortness of breath': [
+                    { 
+                        condition: 'Asthma', 
+                        severity: 'medium', 
+                        confidence: 0.77, 
+                        symptoms: ['shortness of breath', 'wheezing', 'cough', 'nocturnal symptoms', 'triggers'],
+                        diagnosis: 'Spirometry with reversibility testing',
+                        treatment: 'Inhaled corticosteroids, bronchodilators',
+                        reference: ':cite[1]:cite[2]'
+                    },
+                    { 
+                        condition: 'COPD', 
+                        severity: 'high', 
+                        confidence: 0.83, 
+                        symptoms: ['shortness of breath', 'chronic cough', 'sputum production', 'smoking history'],
+                        diagnosis: 'Spirometry with post-bronchodilator FEV1/FVC <0.7',
+                        treatment: 'Bronchodilators, steroids, oxygen if needed',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'Pneumonia', 
+                        severity: 'high', 
+                        confidence: 0.79, 
+                        symptoms: ['shortness of breath', 'fever', 'cough', 'sputum production', 'pleuritic pain'],
+                        diagnosis: 'Chest X-ray, sputum culture, CBC',
+                        treatment: 'Antibiotics based on suspected pathogen',
+                        reference: ':cite[1]:cite[5]'
+                    }
+                ],
+                'cough': [
+                    { 
+                        condition: 'Acute Bronchitis', 
+                        severity: 'low', 
+                        confidence: 0.82, 
+                        symptoms: ['cough', 'sputum production', 'rhinorrhea', 'sore throat', 'no fever'],
+                        diagnosis: 'Clinical diagnosis, rule out pneumonia',
+                        treatment: 'Symptomatic relief, avoid antibiotics unless bacterial',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Pulmonary Tuberculosis', 
+                        severity: 'high', 
+                        confidence: 0.75, 
+                        symptoms: ['cough', 'hemoptysis', 'night sweats', 'weight loss', 'fever'],
+                        diagnosis: 'Chest X-ray, sputum AFB smear and culture, PCR',
+                        treatment: 'RIPE therapy (rifampin, isoniazid, pyrazinamide, ethambutol)',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'ACE Inhibitor Cough', 
+                        severity: 'low', 
+                        confidence: 0.85, 
+                        symptoms: ['dry cough', 'onset after starting ACE inhibitor', 'no other respiratory symptoms'],
+                        diagnosis: 'Temporal relationship with medication',
+                        treatment: 'Switch to ARB or alternative antihypertensive',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // General Symptoms
+                'fever': [
+                    { 
+                        condition: 'Influenza', 
+                        severity: 'medium', 
+                        confidence: 0.75, 
+                        symptoms: ['fever', 'myalgia', 'headache', 'fatigue', 'cough'],
+                        diagnosis: 'Rapid antigen test, PCR if needed',
+                        treatment: 'Supportive care, antivirals if early',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'COVID-19', 
+                        severity: 'medium', 
+                        confidence: 0.80, 
+                        symptoms: ['fever', 'cough', 'shortness of breath', 'loss of taste/smell', 'fatigue'],
+                        diagnosis: 'PCR testing, antigen tests',
+                        treatment: 'Supportive care, antivirals for high risk',
+                        reference: ':cite[1]:cite[2]'
+                    },
+                    { 
+                        condition: 'UTI', 
+                        severity: 'low', 
+                        confidence: 0.85, 
+                        symptoms: ['fever', 'dysuria', 'frequency', 'urgency', 'suprapubic pain'],
+                        diagnosis: 'Urinalysis, urine culture',
+                        treatment: 'Antibiotics based on local resistance',
+                        reference: ':cite[1]'
+                    }
+                ],
+                'fatigue': [
+                    { 
+                        condition: 'Anemia', 
+                        severity: 'medium', 
+                        confidence: 0.78, 
+                        symptoms: ['fatigue', 'pallor', 'shortness of breath', 'tachycardia', 'brittle nails'],
+                        diagnosis: 'CBC, iron studies, B12/folate levels',
+                        treatment: 'Iron supplementation, address underlying cause',
+                        reference: ':cite[7]'
+                    },
+                    { 
+                        condition: 'Hypothyroidism', 
+                        severity: 'low', 
+                        confidence: 0.82, 
+                        symptoms: ['fatigue', 'weight gain', 'cold intolerance', 'constipation', 'dry skin'],
+                        diagnosis: 'TSH, free T4 levels',
+                        treatment: 'Levothyroxine replacement',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Depression', 
+                        severity: 'medium', 
+                        confidence: 0.70, 
+                        symptoms: ['fatigue', 'low mood', 'anhedonia', 'sleep disturbance', 'appetite changes'],
+                        diagnosis: 'Clinical diagnosis using DSM-5 criteria',
+                        treatment: 'SSRIs, psychotherapy, lifestyle changes',
+                        reference: ':cite[1]:cite[2]'
+                    }
+                ],
+                
+                // Musculoskeletal Symptoms
+                'back pain': [
+                    { 
+                        condition: 'Mechanical Low Back Pain', 
+                        severity: 'low', 
+                        confidence: 0.88, 
+                        symptoms: ['back pain', 'worse with movement', 'no neurological deficits', 'improves with rest'],
+                        diagnosis: 'Clinical diagnosis, imaging only if red flags present',
+                        treatment: 'NSAIDs, physical therapy, activity modification',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Spinal Cord Compression', 
+                        severity: 'high', 
+                        confidence: 0.83, 
+                        symptoms: ['back pain', 'leg weakness', 'bowel/bladder dysfunction', 'sensory loss'],
+                        diagnosis: 'MRI spine, neurological exam',
+                        treatment: 'Emergency neurosurgical evaluation, steroids, possible decompression',
+                        reference: ':cite[2]:cite[5]'
+                    },
+                    { 
+                        condition: 'Ankylosing Spondylitis', 
+                        severity: 'medium', 
+                        confidence: 0.75, 
+                        symptoms: ['chronic back pain', 'morning stiffness', 'improves with exercise', 'limited spinal mobility'],
+                        diagnosis: 'HLA-B27 testing, X-ray showing sacroiliitis',
+                        treatment: 'NSAIDs, TNF inhibitors, physical therapy',
+                        reference: ':cite[1]'
+                    }
+                ],
+                
+                // Genitourinary Symptoms
+                'dysuria': [
+                    { 
+                        condition: 'Urinary Tract Infection', 
+                        severity: 'low', 
+                        confidence: 0.92, 
+                        symptoms: ['dysuria', 'frequency', 'urgency', 'suprapubic pain', 'cloudy urine'],
+                        diagnosis: 'Urinalysis showing WBCs, nitrites, leukocyte esterase',
+                        treatment: 'Trimethoprim-sulfamethoxazole or nitrofurantoin based on local resistance',
+                        reference: ':cite[1]'
+                    },
+                    { 
+                        condition: 'Pyelonephritis', 
+                        severity: 'high', 
+                        confidence: 0.87, 
+                        symptoms: ['dysuria', 'flank pain', 'fever', 'nausea/vomiting', 'CVA tenderness'],
+                        diagnosis: 'Urinalysis, urine culture, CBC showing leukocytosis',
+                        treatment: 'IV antibiotics (ceftriaxone, ciprofloxacin), hospitalization if severe',
+                        reference: ':cite[1]:cite[5]'
+                    },
+                    { 
+                        condition: 'Sexually Transmitted Infection', 
+                        severity: 'medium', 
+                        confidence: 0.80, 
+                        symptoms: ['dysuria', 'urethral/vaginal discharge', 'pelvic pain', 'sexual exposure'],
+                        diagnosis: 'NAAT testing for chlamydia/gonorrhea, wet mount',
+                        treatment: 'Dual therapy for chlamydia/gonorrhea (ceftriaxone + azithromycin)',
+                        reference: ':cite[1]'
+                    }
+                ]
+            };
+
+            // Image Findings Database
+            const imageFindings = {
+                'chest-xray': [
+                    { 
+                        finding: 'Pulmonary Infiltrate', 
+                        condition: 'Pneumonia', 
+                        confidence: 0.92,
+                        diagnosis: 'Consolidation with air bronchograms',
+                        treatment: 'Antibiotics based on suspected pathogen',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Pleural Effusion', 
+                        condition: 'Congestive Heart Failure', 
+                        confidence: 0.85,
+                        diagnosis: 'Blunted costophrenic angles, fluid in pleural space',
+                        treatment: 'Diuretics, treat underlying heart failure',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Pneumothorax', 
+                        condition: 'Pneumothorax', 
+                        confidence: 0.96,
+                        diagnosis: 'Visceral pleural line with absent lung markings',
+                        treatment: 'Small: observation, Large: chest tube',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Lung Nodule', 
+                        condition: 'Possible Lung Cancer', 
+                        confidence: 0.88,
+                        diagnosis: 'Solitary pulmonary nodule, may need biopsy',
+                        treatment: 'CT follow-up or biopsy based on size/characteristics',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Cardiomegaly', 
+                        condition: 'Congestive Heart Failure', 
+                        confidence: 0.89,
+                        diagnosis: 'Cardiothoracic ratio >0.5, pulmonary vascular congestion',
+                        treatment: 'Diuretics, ACE inhibitors, beta-blockers, treat underlying cause',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Cavitary Lesion', 
+                        condition: 'Tuberculosis or Lung Abscess', 
+                        confidence: 0.85,
+                        diagnosis: 'Thick-walled cavity with air-fluid level',
+                        treatment: 'Antibiotics, possible drainage for abscess, RIPE for TB',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'head-ct': [
+                    { 
+                        finding: 'Intracranial Hemorrhage', 
+                        condition: 'Hemorrhagic Stroke', 
+                        confidence: 0.94,
+                        diagnosis: 'Hyperdense area in brain parenchyma',
+                        treatment: 'Blood pressure control, neurosurgical consult',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Mass Lesion', 
+                        condition: 'Brain Tumor', 
+                        confidence: 0.88,
+                        diagnosis: 'Space-occupying lesion with possible edema',
+                        treatment: 'Neurosurgical evaluation, possible resection',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Ischemic Changes', 
+                        condition: 'Ischemic Stroke', 
+                        confidence: 0.91,
+                        diagnosis: 'Hypodense area in vascular territory',
+                        treatment: 'Thrombolytics if early, aspirin, rehab',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Subdural Hematoma', 
+                        condition: 'Subdural Hematoma', 
+                        confidence: 0.93,
+                        diagnosis: 'Crescent-shaped hyperdensity along brain surface',
+                        treatment: 'Neurosurgical evaluation for evacuation',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Cerebral Atrophy', 
+                        condition: 'Neurodegenerative Disease', 
+                        confidence: 0.83,
+                        diagnosis: 'Enlarged ventricles, widened sulci',
+                        treatment: 'Cognitive evaluation, cholinesterase inhibitors if dementia',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Hydrocephalus', 
+                        condition: 'Obstructive or Communicating Hydrocephalus', 
+                        confidence: 0.88,
+                        diagnosis: 'Enlarged ventricles out of proportion to sulcal enlargement',
+                        treatment: 'Neurosurgical evaluation for possible shunt placement',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'abdominal-ct': [
+                    { 
+                        finding: 'Appendiceal Inflammation', 
+                        condition: 'Appendicitis', 
+                        confidence: 0.93,
+                        diagnosis: 'Dilated appendix >6mm, periappendiceal fat stranding',
+                        treatment: 'IV antibiotics, appendectomy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Bowel Obstruction', 
+                        condition: 'Small Bowel Obstruction', 
+                        confidence: 0.89,
+                        diagnosis: 'Dilated loops of small bowel with transition point',
+                        treatment: 'NPO, NG tube, surgery if signs of strangulation',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Gallstones', 
+                        condition: 'Cholecystitis', 
+                        confidence: 0.87,
+                        diagnosis: 'Gallstones with gallbladder wall thickening',
+                        treatment: 'IV antibiotics, cholecystectomy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Diverticulitis', 
+                        condition: 'Diverticulitis', 
+                        confidence: 0.90,
+                        diagnosis: 'Colonic diverticula with surrounding inflammation',
+                        treatment: 'IV antibiotics, bowel rest, possible surgery',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'mri-brain': [
+                    { 
+                        finding: 'Multiple Sclerosis Plaques', 
+                        condition: 'Multiple Sclerosis', 
+                        confidence: 0.92,
+                        diagnosis: 'Periventricular white matter lesions',
+                        treatment: 'Disease-modifying therapies, symptom management',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Acute Ischemic Stroke', 
+                        condition: 'Ischemic Stroke', 
+                        confidence: 0.95,
+                        diagnosis: 'Restricted diffusion on DWI sequence',
+                        treatment: 'Thrombolytics if early, aspirin, rehab',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'mri-spine': [
+                    { 
+                        finding: 'Herniated Nucleus Pulposus', 
+                        condition: 'Radiculopathy', 
+                        confidence: 0.91,
+                        diagnosis: 'Disc material compressing nerve root',
+                        treatment: 'Physical therapy, epidural steroid injections, possible discectomy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Spinal Stenosis', 
+                        condition: 'Neurogenic Claudication', 
+                        confidence: 0.87,
+                        diagnosis: 'Narrowing of spinal canal with nerve compression',
+                        treatment: 'Physical therapy, surgical decompression if severe',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'ultrasound-abdomen': [
+                    { 
+                        finding: 'Gallbladder Wall Thickening', 
+                        condition: 'Acute Cholecystitis', 
+                        confidence: 0.90,
+                        diagnosis: 'Positive sonographic Murphy sign, pericholecystic fluid',
+                        treatment: 'IV antibiotics, cholecystectomy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Hepatic Steatosis', 
+                        condition: 'Fatty Liver Disease', 
+                        confidence: 0.84,
+                        diagnosis: 'Increased echogenicity of liver compared to kidney',
+                        treatment: 'Weight loss, control of diabetes/dyslipidemia',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ],
+                'mammogram': [
+                    { 
+                        finding: 'Spiculated Mass', 
+                        condition: 'Breast Cancer', 
+                        confidence: 0.93,
+                        diagnosis: 'Irregular mass with spiculated margins',
+                        treatment: 'Biopsy, surgical excision, possible adjuvant therapy',
+                        reference: ':cite[3]:cite[7]'
+                    },
+                    { 
+                        finding: 'Clustered Microcalcifications', 
+                        condition: 'Ductal Carcinoma In Situ', 
+                        confidence: 0.86,
+                        diagnosis: 'Pleomorphic calcifications in linear or segmental distribution',
+                        treatment: 'Biopsy, possible lumpectomy with radiation',
+                        reference: ':cite[3]:cite[7]'
+                    }
+                ]
+            };
+
+            // Clinical Decision Support Rules
+            const clinicalRules = {
+                // Red Flag Symptoms
+                redFlags: {
+                    neurological: [
+                        'sudden severe headache',
+                        'loss of consciousness',
+                        'seizure',
+                        'sudden vision loss',
+                        'focal weakness',
+                        'dysphagia',
+                        'ataxia'
+                    ],
+                    cardiovascular: [
+                        'chest pain radiating to arm/jaw',
+                        'syncope with exertion',
+                        'palpitations with syncope',
+                        'unexplained hypotension'
+                    ],
+                    abdominal: [
+                        'severe abdominal pain',
+                        'rigid abdomen',
+                        'unexplained weight loss',
+                        'hematemesis',
+                        'melena'
+                    ],
+                    general: [
+                        'high fever (>39°C)',
+                        'neck stiffness',
+                        'petechial rash',
+                        'severe dehydration'
+                    ]
+                },
+                
+                // Age-Specific Considerations
+                ageSpecific: {
+                    pediatric: {
+                        commonConditions: [
+                            'viral infections',
+                            'otitis media',
+                            'asthma',
+                            'gastroenteritis'
+                        ],
+                        redFlags: [
+                            'bulging fontanelle',
+                            'high-pitched cry',
+                            'failure to thrive',
+                            'absence of tears'
+                        ]
+                    },
+                    geriatric: {
+                        commonConditions: [
+                            'pneumonia',
+                            'UTI',
+                            'heart failure',
+                            'osteoarthritis'
+                        ],
+                        atypicalPresentations: [
+                            'delirium as infection presentation',
+                            'silent MI',
+                            'absence of fever in infection'
+                        ]
+                    }
+                },
+                
+                // Medication Interactions
+                dangerousCombinations: [
+                    {
+                        medications: ['warfarin', 'NSAIDs'],
+                        risk: 'Increased bleeding risk',
+                        action: 'Monitor INR closely, consider alternative pain management'
+                    },
+                    {
+                        medications: ['ACE inhibitors', 'potassium-sparing diuretics'],
+                        risk: 'Hyperkalemia',
+                        action: 'Monitor potassium levels, adjust therapy'
+                    }
+                ]
+            };
+
+            // Laboratory Interpretation Database
+            const labInterpretation = {
+                cbc: {
+                    anemia: {
+                        microcytic: {
+                            conditions: ['iron deficiency', 'thalassemia', 'chronic disease'],
+                            nextSteps: ['iron studies', 'Hb electrophoresis', 'ferritin']
+                        },
+                        macrocytic: {
+                            conditions: ['B12/folate deficiency', 'hypothyroidism', 'alcoholism'],
+                            nextSteps: ['B12/folate levels', 'TSH', 'MCV']
+                        }
+                    },
+                    leukocytosis: {
+                        conditions: ['infection', 'inflammation', 'leukemia'],
+                        nextSteps: ['differential', 'blood culture if febrile', 'peripheral smear']
+                    }
+                },
+                
+                chemistry: {
+                    hyponatremia: {
+                        conditions: ['SIADH', 'heart failure', 'cirrhosis', 'diuretic use'],
+                        evaluation: ['serum osmolality', 'urine sodium', 'volume status']
+                    },
+                    elevatedCreatinine: {
+                        conditions: ['acute kidney injury', 'chronic kidney disease'],
+                        evaluation: ['BUN', 'urinalysis', 'renal ultrasound']
+                    }
+                },
+                
+                cardiacMarkers: {
+                    troponinElevation: {
+                        conditions: ['acute MI', 'myocarditis', 'pulmonary embolism'],
+                        evaluation: ['serial troponins', 'ECG', 'echocardiogram']
+                    },
+                    bnpElevation: {
+                        conditions: ['heart failure', 'pulmonary hypertension'],
+                        evaluation: ['echocardiogram', 'volume status assessment']
+                    }
+                }
+            };
+
+            // Evidence-Based Medicine References
+            const evidenceReferences = {
+                citations: {
+                    1: 'UpToDate Clinical Decision Support',
+                    2: 'American College of Physicians Guidelines',
+                    3: 'Radiology Society of North America Guidelines',
+                    4: 'CDC Treatment Guidelines',
+                    5: 'New England Journal of Medicine',
+                    6: 'Journal of the American Medical Association',
+                    7: 'American Journal of Roentgenology'
+                },
+                
+                guidelines: {
+                    hypertension: {
+                        source: 'ACC/AHA 2017 Guidelines',
+                        keyPoints: [
+                            'Diagnosis: BP ≥130/80 mmHg on ≥2 occasions',
+                            'Lifestyle modifications first-line',
+                            'First-line meds: ACE/ARB, CCB, thiazide'
+                        ]
+                    },
+                    diabetes: {
+                        source: 'ADA 2023 Standards of Care',
+                        keyPoints: [
+                            'A1c ≥6.5% diagnostic',
+                            'Lifestyle + metformin first-line',
+                            'Individualize A1c targets'
+                        ]
+                    }
+                }
+            };
+
+            // Temporal Patterns
+            const temporalPatterns = {
+                acuteOnset: ['pulmonary embolism', 'appendicitis', 'stroke'],
+                chronicProgressive: ['COPD', 'congestive heart failure', 'osteoarthritis'],
+                intermittent: ['migraine', 'irritable bowel syndrome', 'angina']
+            };
+
+            // Risk Factors
+            const riskFactors = {
+                smoking: ['lung cancer', 'COPD', 'CAD'],
+                diabetes: ['CAD', 'stroke', 'diabetic neuropathy'],
+                familyHistory: ['breast cancer', 'colon cancer', 'early CAD']
+            };
+
+            // Drug Side Effects
+            const drugSideEffects = {
+                statins: ['myalgia', 'elevated LFTs', 'rare rhabdomyolysis'],
+                opioids: ['constipation', 'sedation', 'respiratory depression'],
+                SSRIs: ['nausea', 'sexual dysfunction', 'activation syndrome']
+};
+
+            // ==================== END OF MEDICAL KNOWLEDGE BASE ====================

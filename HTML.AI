@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroMed AI - Advanced Medical Diagnostics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTM2OCAxMjhIMTQ0Yy0yNi41IDAtNDggMjEuNS00OCA0OHYxNjBjMCAyNi41IDIxLjUgNDggNDggNDhoMjI0YzI2LjUgMCA0OC0yMS41IDQ4LTQ4VjE3NmMwLTI2LjUtMjEuNS00OC00OC00OHptLTE2IDE2MGMwIDguOC03LjIgMTYtMTYgMTZzLTE2LTcuMi0xNi0xNnYtMzJjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnYzMnptLTk2IDBjMCA4LjgtNy4yIDE2LTE2IDE2cy0xNi03LjItMTYtMTZ2LTMyYzAtOC44IDcuMi0xNiAxNi0xNnMxNiA3LjIgMTYgMTZ2MzJ6bTk2IDY0YzAgOC44LTcuMiAxNi0xNiAxNnMtMTYtNy4yLTE2LTE2di0zMmMwLTguOCA3LjItMTYgMTYtMTZzMTYgNy4yIDE2IDE2djMyem0tOTYgMGMwIDguOC03LjIgMTYtMTYgMTZzLTE2LTcuMi0xNi0xNnYtMzJjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnYzMnoiLz48L3N2Zz4=" alt="AI Icon">
+                NeuroMed AI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Diagnostics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center hero-content">
+            <h1 class="display-4 fw-bold mb-4">Advanced NeuroMed AI Diagnostics</h1>
+            <p class="lead mb-5">Next-generation adaptive medical analysis powered by deep learning</p>
+            
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-8 col-lg-6">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTQ0OCAzMkg2NEM0Ni4zMyAzMiAzMiA0Ni4zMyAzMiA2NHYzODRjMCAxNy42NyAxNC4zMyAzMiAzMiAzMmgzODRjMTcuNjcgMCAzMi0xNC4zMyAzMi0zMlY2NGMwLTE3LjY3LTE0LjMzLTMyLTMyLTMyem0tMzIwIDk2YzAtMTcuNjcgMTQuMzMtMzIgMzItMzJzMzIgMTQuMzMgMzIgMzItMTQuMzMgMzItMzIgMzItMzItMTQuMzMtMzItMzJ6bTk2IDE5MmgtNjR2LTk2aDY0djk2em0zMi0xMjhjMCAxNy42Ny0xNC4zMyAzMi0zMiAzMnMtMzItMTQuMzMtMzItMzIgMTQuMzMtMzIgMzItMzIgMzIgMTQuMzMgMzIgMzJ6bTk2IDMyaC02NHYtNjRoNjR2NjR6bTAtOTZoLTY0di02NGg2NHY2NHoiIG9wYWNpdHk9IjAuNyIvPjwvc3ZnPg==" class="img-fluid floating" alt="Medical AI" style="max-height: 200px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Container -->
+    <div class="container">
+        <div class="search-container pulse-animation">
+            <h2 class="text-center mb-4">Comprehensive Medical Analysis</h2>
+            <p class="text-center text-muted mb-4">Describe symptoms, upload medical images, or provide patient data for AI-powered diagnosis</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="input-group mb-4">
+                        <input type="text" class="form-control ai-search-bar" id="aiSearchInput" placeholder="Example: '45-year-old male with chest pain and shortness of breath for 2 hours...'">
+                        <button class="btn search-btn" id="searchButton">
+                            <i class="bi bi-robot me-2"></i>Analyze
+                        </button>
+                    </div>
+                    
+                    <!-- File Upload Area -->
+                    <div class="upload-area" id="uploadArea">
+                        <i class="bi bi-cloud-arrow-up feature-icon floating"></i>
+                        <h5>Upload Medical Images</h5>
+                        <p class="text-muted">Drag & drop X-rays, MRIs, CT scans, or other medical images here</p>
+                        <input type="file" id="fileInput" class="file-input" accept="image/*,.dicom,.nii" multiple>
+                        <label for="fileInput" class="file-label">
+                            <i class="bi bi-upload me-2"></i>Select Files
+                        </label>
+                    </div>
+                    
+                    <div class="selected-files" id="selectedFiles"></div>
+                    
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Additional patient information (optional)" id="patientInfo" style="height: 120px"></textarea>
+                        <label for="patientInfo">Patient details (age, gender, medical history, medications, lab results)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div class="results-container" id="resultsContainer">
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">NeuroMed AI is analyzing your data. This may take a few moments...</p>
+                <div class="progress mt-3" style="height: 8px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                </div>
+            </div>
+            <div id="analysisResults"></div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="container my-5 py-5">
+        <h2 class="text-center mb-5">NeuroMed AI Diagnostic Capabilities</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card card-3d">
+                    <div class="feature-icon">
+                        <i class="bi bi-activity rotate-3d"></i>
+                    </div>
+                    <h4>Multi-Modal Analysis</h4>
+                    <p>Simultaneously processes symptoms, medical images, lab results, and patient history for comprehensive assessment.</p>
+                    
+                    <div class="mt-3">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" class="img-fluid medical-image" alt="Multi-Modal Analysis">
+                        <p class="image-caption">Integrated diagnostic approach</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d">
+                    <div class="feature-icon">
+                        <i class="bi bi-heart-pulse rotate-3d"></i>
+                    </div>
+                    <h4>Clinical Decision Support</h4>
+                    <p>Provides evidence-based treatment recommendations and flags potential medication interactions.</p>
+                    
+                    <div class="mt-3">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" class="img-fluid medical-image" alt="Clinical Decision">
+                        <p class="image-caption">Evidence-based guidelines</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card card-3d">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check rotate-3d"></i>
+                    </div>
+                    <h4>Continuous Learning</h4>
+                    <p>Adaptive algorithms improve with each case, incorporating the latest medical research and guidelines.</p>
+                    
+                    <div class="mt-3">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" class="img-fluid medical-image" alt="Continuous Learning">
+                        <p class="image-caption">Adaptive neural networks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medical Guidelines Section -->
+    <section class="container my-5 py-5 bg-light rounded-3">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>Evidence-Based Medicine</h2>
+                <p class="lead">NeuroMed AI integrates with the latest clinical guidelines and research findings to provide up-to-date recommendations.</p>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item bg-transparent"><i class="bi bi-check-circle-fill text-success me-2"></i> ACC/AHA Cardiovascular Guidelines</li>
+                    <li class="list-group-item bg-transparent"><i class="bi bi-check-circle-fill text-success me-2"></i> IDSA Antimicrobial Recommendations</li>
+                    <li class="list-group-item bg-transparent"><i class="bi bi-check-circle-fill text-success me-2"></i> NCCN Cancer Treatment Protocols</li>
+                    <li class="list-group-item bg-transparent"><i class="bi bi-check-circle-fill text-success me-2"></i> ADA Diabetes Standards of Care</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMDBhY2MxIiBkPSJNNDQ4IDMyaC0zODRjLTM1LjMgMC02NCAyOC43LTY0IDY0djMyMGMwIDM1LjMgMjguNyA2NCA2NCA2NGgzODRjMzUuMyAwIDY0LTI4LjcgNjQtNjR2LTMyMGMwLTM1LjMtMjguNy02NC02NC02NHptLTMyIDI1NmMwIDUzLTQzIDk2LTk2IDk2cy05Ni00My05Ni05NiA0My05NiA5Ni05NiA5NiA0MyA5NiA5NnoiLz48L3N2Zz4=" class="img-fluid rounded-3 medical-image floating" alt="Medical Guidelines">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center footer-content">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>NeuroMed AI</h5>
+                    <p>Advanced diagnostic solutions for modern healthcare</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">Diagnostics</a></li>
+                        <li><a href="#" class="text-white">Research</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-envelope me-2"></i> contact@neuromedai.com</li>
+                        <li><i class="bi bi-phone me-2"></i> +91 (8010 1669 01 </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-light opacity-50">
+            <p class="mb-0">&copy; 2025 NeuroMed AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Medical Knowledge Base -->
+    <script src="medical-knowledge.js"></script>
+    
+    <!-- Main Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
